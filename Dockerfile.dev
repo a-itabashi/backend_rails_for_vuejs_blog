@@ -1,0 +1,33 @@
+
+# ベースにするイメージを指定
+FROM ruby:3.4.2
+
+# 必要なパッケージをインストール
+RUN apt-get update -qq && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    default-mysql-client \
+    vim \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# 作業用ディレクトリを設定して、ディレクトリ作成と設定を同時に行う
+WORKDIR /rails-app
+
+# ローカルの Gemfile と Gemfile.lock をコンテナ内にコピー
+COPY Gemfile Gemfile.lock ./
+
+# bundle install を実行
+RUN bundle install
+
+# ローカルのrails-app配下のファイルをコンテナ内にコピー
+COPY . .
+
+# ENTRYPOINT を設定し、コンテナ起動時に常に実行されるスクリプトを指定
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+# CMD を設定し、デフォルトのサーバ起動コマンドを指定
+CMD ["rails", "server", "-b", "0.0.0.0"]

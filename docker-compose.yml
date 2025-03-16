@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.4
+    # Credentialで管理すべきだが、今回はべタ書きで対応
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rails_for_vuejs_blog_development
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  rails:
+    build:
+      # context: ./backend
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bash -c "bundle exec rails s -b '0.0.0.0'"
+    volumes:
+      - .:/rails-app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      # - DB_USER=user
+      # - DB_PASSWORD=password
+      - DB_NAME=rails_for_vuejs_blog_development
+    working_dir: /rails-app
+    tty: true
+    stdin_open: true
+volumes:
+  mysql_data:
