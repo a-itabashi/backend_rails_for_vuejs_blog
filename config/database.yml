@@ -14,19 +14,19 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:
+  password: <%= ENV.fetch("DB_PASSWORD") { "password" } %>
   host: <%= ENV.fetch("DB_HOST") { "127.0.0.1" } %>
 
 development:
   <<: *default
-  database: rails_app_development
+  database: rails_for_vuejs_blog_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: rails_app_test
+  database: rails_for_vuejs_blog_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -51,14 +51,14 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: rails_app_production
+    database: rails_for_vuejs_blog_production
     username: rails_app
     password: <%= ENV["RAILS_APP_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: rails_app_production_cache
+    database: rails_for_vuejs_blog_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: rails_app_production_queue
+    database: rails_for_vuejs_blog_production_queue
     migrations_paths: db/queue_migrate
