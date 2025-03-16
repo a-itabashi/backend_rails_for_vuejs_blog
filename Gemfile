@@ -49,7 +49,7 @@ group :development, :test do
   gem "faker"
   gem "letter_opener_web"
   gem "pry-byebug", "~> 3.10", ">= 3.10.1"
-  gem "pry-doc"
+  # gem "pry-doc"
   gem "pry-rails"
   gem "rspec-rails"
   gem "rubocop-faker"
