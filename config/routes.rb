@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   # get '/health_check', to: 'health_checks#index'
 
   resources :blogs
-  resources :rooms, only: [:index, :create]
+  resources :rooms, only: [:index, :create] do
+    resources :messages, only: [:index, :create]
+  end
 end
