@@ -3,7 +3,8 @@ class MessagesController < ApplicationController
     room = Room.find(params[:room_id])
     messages = room.messages.limit(20)
 
-    render json: messages, status: :ok
+    # render json: messages, status: :ok
+    render json: { room_name: room.name, messages: messages }, status: :ok
   end
 
   def create
@@ -14,6 +15,7 @@ class MessagesController < ApplicationController
     else
       render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
     end
+    ActionCable.server.broadcast "room_channel_#{params[:room_id]}", message
   end
 
   private

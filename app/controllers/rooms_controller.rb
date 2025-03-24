@@ -6,9 +6,9 @@ class RoomsController < ApplicationController
   end
 
   def create
-    room = Room.new(rooms_params)
+    room = Room.new(room_params)
     if room.save
-      head :created
+      render json: room, status: :created
     else
       render json: { errors: room.errors.full_messages }, status: :unprocessable_entity
     end
@@ -17,6 +17,6 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:rooms).permit(:name)
+    params.require(:room).permit(:name)
   end
 end
