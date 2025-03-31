@@ -48,7 +48,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "letter_opener_web"
-  gem "pry-byebug", "~> 3.10", ">= 3.10.1"
+  gem "pry-byebug", "~> 3.11"
   # gem "pry-doc"
   gem "pry-rails"
   gem "rspec-rails"
